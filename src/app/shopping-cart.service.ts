@@ -9,59 +9,62 @@ import { Observable } from 'rxjs/Observable';
 @Injectable()
 export class ShoppingCartService {
 
-  constructor(private db:AngularFireDatabase) { }
+  constructor(private db: AngularFireDatabase) { }
 
 
-async getCart():Promise<Observable<ShoppingCart>>{
-  let cartId=await this.getOrCreateCartId();
-  return await this.getById(cartId).map(res=>new ShoppingCart(res.items));
-}
+  async getCart(): Promise<Observable<ShoppingCart>> {
+    let cartId = await this.getOrCreateCartId();
+    return await this.getById(cartId).map(res => new ShoppingCart(res.items));
+  }
 
-async addToCart(product:Product){
-  this.updateCartItem(product,1);
-}
+  async addToCart(product: Product) {
+    this.updateCartItem(product, 1);
+  }
 
-async removeFromCart(product:Product){
- this.updateCartItem(product,-1);
-}
+  async removeFromCart(product: Product) {
+    this.updateCartItem(product, -1);
+  }
 
-async clearCart(){
-  let cartId=await this.getOrCreateCartId();
-  this.db.object('/shopping-carts/'+cartId+'/items').remove();
-}
+  async clearCart() {
+    let cartId = await this.getOrCreateCartId();
+    this.db.object('/shopping-carts/' + cartId + '/items').remove();
+  }
 
- private async getOrCreateCartId():Promise<string>{
-    let cartId=localStorage.getItem('cartId');
-    if(cartId)return cartId;
+  private async getOrCreateCartId(): Promise<string> {
+    let cartId = localStorage.getItem('cartId');
+    if (cartId) return cartId;
 
-    let result=await this.create();
-    localStorage.setItem('cartId',result.key);
+    let result = await this.create();
+    localStorage.setItem('cartId', result.key);
     return result.key;
   }
 
-  private getCartItem(productId:string,cartId:string){
-    return this.db.object('/shopping-carts/'+cartId+'/items/'+productId)
+  private getCartItem(productId: string, cartId: string) {
+    return this.db.object('/shopping-carts/' + cartId + '/items/' + productId)
   }
 
-  private create(){
+  private create() {
     return this.db.list('/shopping-carts').push({
-      dateCreated:new Date().getTime()
+      dateCreated: new Date().getTime()
     });
-}
+  }
 
-private  getById(cartId:string){
-  return this.db.object('/shopping-carts/'+cartId);
-}
+  private getById(cartId: string) {
+    return this.db.object('/shopping-carts/' + cartId);
+  }
 
-  private async updateCartItem(product:Product,change:number){
-    let cartId=await this.getOrCreateCartId();
-    let item$=this.getCartItem(product.$key,cartId);
-    item$.take(1).subscribe(item=>{
-      item$.update({
-        title:product.title,
-        price:product.price,
-        imageUrl:product.imageUrl,
-         quantity:(item.quantity|| 0) +change 
+  private async updateCartItem(product: Product, change: number) {
+    let cartId = await this.getOrCreateCartId();
+    let item$ = this.getCartItem(product.$key, cartId);
+    item$.take(1).subscribe(item => {
+      let quantity = (item.quantity || 0) + change;
+      if (quantity === 0) item$.remove();
+      else
+        item$.update({
+          title: product.title,
+          price: product.price,
+          imageUrl: product.imageUrl,
+          quantity: (item.quantity || 0) + change
         });
     });
   }
