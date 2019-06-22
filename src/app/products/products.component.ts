@@ -1,5 +1,4 @@
 import { ShoppingCartService } from './../shopping-cart.service';
-import { Subscription } from 'rxjs/Subscription';
 import { ActivatedRoute } from '@angular/router';
 import { Product } from './../models/Product';
 import { ProductService } from './../product.service';
@@ -19,7 +18,9 @@ export class ProductsComponent implements OnInit {
   filteredProducts: Product[] = [];
   shoppingCart$: Observable<ShoppingCart>;
 
-  constructor(private productService: ProductService, private route: ActivatedRoute, private shoppingCartService: ShoppingCartService, ) { }
+  constructor(private productService: ProductService,
+    private route: ActivatedRoute,
+    private shoppingCartService: ShoppingCartService) { }
 
   async ngOnInit() {
     this.shoppingCart$ = await this.shoppingCartService.getCart();

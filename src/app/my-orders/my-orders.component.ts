@@ -1,4 +1,7 @@
 import { Component, OnInit } from '@angular/core';
+import { OrderService } from '../order.service';
+import { Observable } from 'rxjs/Observable';
+import { AuthService } from '../auth.service';
 
 @Component({
   selector: 'app-my-orders',
@@ -7,9 +10,11 @@ import { Component, OnInit } from '@angular/core';
 })
 export class MyOrdersComponent implements OnInit {
 
-  constructor() { }
+  orders$:Observable<any>;
+  constructor(private authService:AuthService,private orderService:OrderService) { }
 
   ngOnInit() {
+    this.orders$=this.authService.appUser$.switchMap(u=>this.orderService.getOrdersByUserId(u.$key));
   }
 
 }
