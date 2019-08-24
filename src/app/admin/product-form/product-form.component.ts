@@ -10,7 +10,7 @@ import 'rxjs/add/operator/take'
 })
 export class ProductFormComponent {
   categories$;
-  product={};
+  product:any={};
   id;
   constructor(
     private categoryService:CategoryService,

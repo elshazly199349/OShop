@@ -13,7 +13,7 @@ import { AuthService } from '../auth.service';
 })
 export class ShippingFormComponent implements OnInit, OnDestroy {
   @Input('cart')cart: ShoppingCart;
-  shipping: {} = {};
+  shipping:any = {};
   userId: string;
   userSubscription: Subscription;
 
@@ -29,9 +29,9 @@ export class ShippingFormComponent implements OnInit, OnDestroy {
     this.userSubscription.unsubscribe();
   }
 
-  async placeOrder() {
-    let order = new Order(this.userId, this.shipping, this.cart);
-    let result = await this.orderService.placeOrder(order);
-    this.router.navigate(['/order-cussess', result.key]);
+  async placeOrder(shipping) {
+     let order = new Order(this.userId, this.shipping, this.cart);
+     let result = await this.orderService.placeOrder(order);
+    this.router.navigate(['/order-success', result.key]);
   }
 }

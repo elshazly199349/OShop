@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { OrderService } from '../order.service';
 import { Observable } from 'rxjs/Observable';
 import { AuthService } from '../auth.service';
+import { Order } from '../models/Order';
 
 @Component({
   selector: 'app-my-orders',
@@ -10,7 +11,7 @@ import { AuthService } from '../auth.service';
 })
 export class MyOrdersComponent implements OnInit {
 
-  orders$:Observable<any>;
+  orders$:Observable<Order[]>;
   constructor(private authService:AuthService,private orderService:OrderService) { }
 
   ngOnInit() {

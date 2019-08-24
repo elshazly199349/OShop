@@ -1,17 +1,27 @@
 <div class="card">
     <div class="card-body" *ngIf="order$ | async as order">
         <h5 class="card-title">Order Summary</h5>
-        <p class="card-text" *ngIf="user$ | async user">Ordered by: {{user.name}}</p>
-        <p class="card-text">Order Date: {{order.datePlaced | date}}.</p>
-        <!-- <ul class="list-group list-group-flush">
-            <li class="list-group-item" *ngFor="let item of order.items">
-                {{item.product.title}}
-                {{item.quantity}} * {{item.title}}
-                <div class="float-right">{{item.totalPrice | currency:'USD':true}}</div>
-            </li>
-            <li class="list-group-item font-weight-bold">
-                <div class="float-right">Total:{{cart.totalPrice | currency:'USD':true}}</div>
-            </li>
-        </ul> -->
+        <p class="card-text">Ordered by: {{ order.shipping.name }}</p>
+        <p class="card-text">Order Date: {{ order.datePlaced | date }}</p>
+        
+        <table class="table table-bordered">
+            <thead class="thead-dark">
+                <tr>
+                    <td>Item</td>
+                    <td>Quantity</td>
+                    <td>Price</td>
+                    <td>Total Price</td>
+                </tr>
+            </thead>
+            <tbody>
+                <tr *ngFor="let item of order.items">
+                    <td>{{item.product.title}}</td>
+                    <td>{{item.quantity}}</td>
+                    <td>{{item.product.price | currency:'USD':true}}</td>
+                    <td>{{item.totalPrice | currency:'USD':true}}</td>
+                </tr>
+            </tbody>
+        </table>
+    
     </div>
 </div>

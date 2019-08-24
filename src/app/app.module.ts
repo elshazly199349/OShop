@@ -70,7 +70,7 @@ import { OrderDetailsComponent } from './order-details/order-details.component';
     RouterModule.forRoot([
       { path: '', component: ProductsComponent },
       { path: 'products', component: ProductsComponent },
-      { path: 'shopping-cart', component: ShoppingCartComponent },
+      { path: 'shopping-cart', component: ShoppingCartComponent,canActivate:[AuthGuard] },
       { path: 'login', component: LoginComponent },
 
       { path: 'check-out', component: CheckOutComponent, canActivate: [AuthGuard] },

@@ -28,7 +28,7 @@ export class OrderService {
     });
   }
 
-  getOrderById(orderId: string):Observable<Order> {
+  getOrderById(orderId: string) {
     return this.db.object('/orders/' + orderId);
   }
 }

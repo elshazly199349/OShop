@@ -2,10 +2,8 @@
 
   <div class="form-group">
     <label for="name">Name</label>
-    <div class="input-group">
       <input type="text" #name="ngModel" [(ngModel)]="shipping.name" name="name" id="name" class="form-control" required
         placeholder="Name">
-    </div>
     <div class="alert alert-danger" *ngIf="name.touched  && name.invalid">
       <div *ngIf="name.errors.required">Name is required</div>
     </div>
@@ -13,10 +11,8 @@
 
   <div class="form-group">
     <label for="line1">Adress</label>
-    <div class="input-group">
       <input type="text" #line1="ngModel" [(ngModel)]="shipping.line1" name="line1" id="line1" class="form-control"
         required placeholder="Line 1">
-    </div>
     <div class="alert alert-danger" *ngIf="line1.touched && line1.invalid">
       <div *ngIf="line1.errors.required">Address 1 is required</div>
     </div>
@@ -24,10 +20,8 @@
 
   <div class="form-group">
     <label for="line2"></label>
-    <div class="input-group">
       <input type="text" #line2="ngModel" [(ngModel)]="shipping.line2" name="line2" id="line2" class="form-control"
         required placeholder="Line 2">
-    </div>
     <div class="alert alert-danger" *ngIf="line2.touched && line2.invalid">
       <div *ngIf="line2.errors.required">Adress 2 is required</div>
     </div>
@@ -35,10 +29,8 @@
 
   <div class="form-group">
     <label for="city">City</label>
-    <div class="input-group">
       <input type="text" #city="ngModel" [(ngModel)]="shipping.city" name="city" id="city" class="form-control" required
         placeholder="City">
-    </div>
     <div class="alert alert-danger" *ngIf="city.touched && city.invalid">
       <div *ngIf="city.errors.required">City is required.</div>
     </div>
